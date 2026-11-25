@@ -22,6 +22,7 @@ jobs:
           mkdir project
           unzip GroceryMaster-Android-v1.1-github-build.zip -d project
           ROOT=$(find project -name settings.gradle.kts -printf '%h\n' | head -n 1)
+          test -n "$ROOT"
           echo "PROJECT_DIR=$ROOT" >> $GITHUB_ENV
 
       - name: Set up Java
@@ -30,7 +31,7 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-            - name: Set up Android SDK
+      - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
           packages: platform-tools
@@ -51,3 +52,4 @@ jobs:
           name: GroceryMaster-APK
           path: project/**/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
